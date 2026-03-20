@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Développeur Android</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-2: #111933;
+      --panel: rgba(255, 255, 255, 0.06);
+      --panel-strong: rgba(255, 255, 255, 0.08);
+      --border: rgba(255, 255, 255, 0.12);
+      --text: #eef2ff;
+      --muted: #b7c2e4;
+      --accent: #8ea6ff;
+      --accent-2: #76e4d2;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.32);
+      --radius: 26px;
+      --max-width: 1320px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(142, 166, 255, 0.22), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(118, 228, 210, 0.14), transparent 24%),
+        linear-gradient(180deg, #0a1020 0%, #0d1428 45%, #0b1020 100%);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .container {
+      width: min(100% - 48px, var(--max-width));
+      margin: 0 auto;
+    }
+
+    .site {
+      position: relative;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(10, 15, 28, 0.58);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 14px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .brand-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #0a1222;
+      font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .nav a:hover {
+      color: var(--text);
+    }
+
+    .btn,
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 20px;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .btn:hover,
+    .btn-outline:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #08111d;
+      box-shadow: 0 14px 36px rgba(142, 166, 255, 0.28);
+    }
+
+    .btn-outline {
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 90px 0 60px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 38px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.7rem, 5vw, 5rem);
+      line-height: 1.02;
+      letter-spacing: -0.045em;
+      max-width: 12ch;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, #ffffff 0%, #d3ddff 45%, #91f5e2 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 58ch;
+      margin-bottom: 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .hero-metrics {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .metric {
+      min-width: 150px;
+      padding: 16px 18px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 1.14rem;
+      margin-bottom: 2px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .hero-card {
+      border-radius: 30px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      overflow: hidden;
+    }
+
+    .hero-shot {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(8, 14, 28, 0.92);
+    }
+
+    .hero-shot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .chip {
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    section {
+      padding: 42px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(1.9rem, 3vw, 2.6rem);
+      letter-spacing: -0.035em;
+      margin-bottom: 8px;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      max-width: 62ch;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px;
+    }
+
+    .project-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.05));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.28s ease, border-color 0.28s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(142, 166, 255, 0.35);
+    }
+
+    .project-cover {
+      height: 300px;
+      padding: 0;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background:
+        radial-gradient(circle at top left, rgba(142, 166, 255, 0.18), transparent 36%),
+        rgba(10, 16, 30, 0.94);
+    }
+
+    .project-ui {
+      width: 100%;
+      height: 100%;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .project-ui img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 16px 38px rgba(0, 0, 0, 0.28);
+      background: rgba(8, 14, 28, 0.92);
+    }
+
+    .project-body {
+      padding: 26px;
+    }
+
+    .project-tag {
+      display: inline-flex;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      color: #dce5ff;
+      background: rgba(142, 166, 255, 0.16);
+      border: 1px solid rgba(142, 166, 255, 0.18);
+      margin-bottom: 14px;
+    }
+
+    .project-card h3 {
+      font-size: 1.52rem;
+      line-height: 1.18;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .project-card p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.75;
+      margin-bottom: 18px;
+    }
+
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .tech-list span {
+      font-size: 0.82rem;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #d9e3ff;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .project-links .btn-outline {
+      padding: 12px 18px;
+      font-size: 0.95rem;
+    }
+
+    .skills-wrap {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .skill-card {
+      padding: 24px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .skill-card h3 {
+      margin-bottom: 14px;
+      font-size: 1.08rem;
+    }
+
+    .skill-card ul {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      color: var(--muted);
+    }
+
+    .skill-card li::before {
+      content: "•";
+      color: var(--accent-2);
+      margin-right: 8px;
+    }
+
+    .about-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      padding: 26px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      box-shadow: var(--shadow);
+    }
+
+    .about-panel {
+      border-radius: 22px;
+      padding: 24px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .about-panel h3 {
+      margin-bottom: 12px;
+      font-size: 1.14rem;
+    }
+
+    .about-panel p {
+      color: var(--muted);
+    }
+
+    .contact-card {
+      padding: 30px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, rgba(142,166,255,0.16), rgba(118,228,210,0.10));
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    footer {
+      padding: 30px 0 46px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.92rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .about-card,
+      .projects-grid,
+      .skills-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .project-cover {
+        height: 320px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .container {
+        width: min(100% - 28px, var(--max-width));
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .hero {
+        padding: 64px 0 40px;
+      }
+
+      .hero h1 {
+        max-width: none;
+      }
+
+      .section-head,
+      .contact-card,
+      .topbar-inner {
+        align-items: start;
+      }
+
+      .project-cover {
+        height: 240px;
+      }
+
+      .project-body,
+      .skill-card,
+      .about-panel,
+      .contact-card {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="site">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a href="#home" class="brand">
+          <span class="brand-badge">LL</span>
+          <span>Portfolio développeur</span>
+        </a>
+
+        <nav class="nav">
+          <a href="#projects">Projets</a>
+          <a href="#skills">Compétences</a>
+          <a href="#about">À propos</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="container hero-grid">
+          <div class="reveal visible">
+            <div class="eyebrow">Disponible pour opportunités Android • Java • Kotlin</div>
+            <h1>Je conçois des <span>applications Android propres, fiables et bien structurées.</span></h1>
+            <p>
+              Développeur Android orienté architecture, qualité de code et expérience utilisateur.
+              J’aime construire des projets lisibles, testables et pensés pour un usage réel.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn" href="#projects">Voir mes projets</a>
+              <a class="btn-outline" href="#contact">Me contacter</a>
+            </div>
+
+            <div class="hero-metrics">
+              <div class="metric">
+                <strong>3 projets forts</strong>
+                <span>présentés clairement</span>
+              </div>
+              <div class="metric">
+                <strong>Code structuré</strong>
+                <span>MVVM, Room, tests</span>
+              </div>
+              <div class="metric">
+                <strong>Approche pro</strong>
+                <span>README, démo, docs</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-card reveal">
+            <div class="hero-shot">
+              <img src="images/hero-project.jpg" alt="Aperçu de projet Android" />
+            </div>
+            <div class="hero-stack">
+              <span class="chip">Android</span>
+              <span class="chip">Java</span>
+              <span class="chip">Kotlin</span>
+              <span class="chip">Room</span>
+              <span class="chip">MVVM</span>
+              <span class="chip">Firebase</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <div class="container">
+          <div class="section-head reveal">
+            <div>
+              <h2>Projets sélectionnés</h2>
+              <p>Peu de projets, mais des projets lisibles, documentés et présentés avec un vrai niveau de finition.</p>
+            </div>
+          </div>
+
+          <div class="projects-grid">
+            <article class="project-card reveal">
+              <div class="project-cover">
+                <div class="project-ui">
+                  <img src="images/realestate-main.png" alt="Capture RealEstateManager" />
+                </div>
+              </div>
+              <div class="project-body">
+                <span class="project-tag">Projet Android</span>
+                <h3>RealEstateManager</h3>
+                <p>Application de gestion de biens immobiliers avec affichage mobile et tablette, base locale, filtres avancés et carte interactive.</p>
+                <div class="tech-list">
+                  <span>Java</span>
+                  <span>Room</span>
+                  <span>MVVM</span>
+                  <span>Google Maps</span>
+                </div>
+                <div class="project-links">
+                  <a class="btn-outline" href="#">Voir le code</a>
+                  <a class="btn-outline" href="#">README</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card reveal">
+              <div class="project-cover">
+                <div class="project-ui">
+                  <img src="images/project-02.jpg" alt="Capture projet API" />
+                </div>
+              </div>
+              <div class="project-body">
+                <span class="project-tag">API & données</span>
+                <h3>App catalogue / API</h3>
+                <p>Projet démontrant l’intégration réseau, le parsing JSON, la gestion des états d’écran et une interface claire orientée utilisateur.</p>
+                <div class="tech-list">
+                  <span>Kotlin</span>
+                  <span>Retrofit</span>
+                  <span>Coroutines</span>
+                  <span>Material UI</span>
+                </div>
+                <div class="project-links">
+                  <a class="btn-outline" href="#">Voir le code</a>
+                  <a class="btn-outline" href="#">README</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card reveal">
+              <div class="project-cover">
+                <div class="project-ui">
+                  <img src="images/project-03.jpg" alt="Capture projet architecture" />
+                </div>
+              </div>
+              <div class="project-body">
+                <span class="project-tag">Qualité & tests</span>
+                <h3>Projet orienté architecture</h3>
+                <p>Exemple de projet mettant l’accent sur la séparation des responsabilités, les tests unitaires et une base de code maintenable.</p>
+                <div class="tech-list">
+                  <span>JUnit</span>
+                  <span>Mockito</span>
+                  <span>Clean Architecture</span>
+                  <span>Repository</span>
+                </div>
+                <div class="project-links">
+                  <a class="btn-outline" href="#">Voir le code</a>
+                  <a class="btn-outline" href="#">README</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card reveal">
+              <div class="project-cover">
+                <div class="project-ui">
+                  <img src="images/project-04.jpg" alt="Capture projet Android supplémentaire" />
+                </div>
+              </div>
+              <div class="project-body">
+                <span class="project-tag">Projet complémentaire</span>
+                <h3>Projet mobile avancé</h3>
+                <p>Projet supplémentaire pour mettre en avant l’architecture, l’expérience utilisateur et une présentation claire de la valeur apportée.</p>
+                <div class="tech-list">
+                  <span>Android</span>
+                  <span>Jetpack</span>
+                  <span>Firebase</span>
+                  <span>UI/UX</span>
+                </div>
+                <div class="project-links">
+                  <a class="btn-outline" href="#">Voir le code</a>
+                  <a class="btn-outline" href="#">README</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills">
+        <div class="container">
+          <div class="section-head reveal">
+            <div>
+              <h2>Compétences</h2>
+              <p>Les technologies et bonnes pratiques que j’utilise pour développer des applications Android robustes et bien architecturées.</p>
+            </div>
+          </div>
+
+          <div class="skills-wrap">
+            <div class="skill-card reveal">
+              <h3>Android</h3>
+              <ul>
+                <li>Android SDK</li>
+                <li>Jetpack components</li>
+                <li>Navigation, RecyclerView</li>
+                <li>Material Design</li>
+              </ul>
+            </div>
+
+            <div class="skill-card reveal">
+              <h3>Architecture</h3>
+              <ul>
+                <li>MVVM</li>
+                <li>Repository pattern</li>
+                <li>Separation of concerns</li>
+                <li>Clean code</li>
+              </ul>
+            </div>
+
+            <div class="skill-card reveal">
+              <h3>Données & réseau</h3>
+              <ul>
+                <li>Room / SQLite</li>
+                <li>Retrofit / API REST</li>
+                <li>JSON parsing</li>
+                <li>Firebase</li>
+              </ul>
+            </div>
+
+            <div class="skill-card reveal">
+              <h3>Qualité</h3>
+              <ul>
+                <li>JUnit</li>
+                <li>Mockito</li>
+                <li>Espresso</li>
+                <li>Documentation projet</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="container">
+          <div class="section-head reveal">
+            <div>
+              <h2>À propos</h2>
+              <p>Je développe des applications Android en mettant l’accent sur l’architecture (MVVM), la qualité du code et les bonnes pratiques.
+              Chaque projet est conçu comme un produit réel, avec une logique claire, une documentation soignée et une approche professionnelle.</p>
+            </div>
+          </div>
+
+          <div class="about-card reveal">
+            <div class="about-panel">
+              <h3>Ma démarche</h3>
+              <p>
+                Je privilégie les projets lisibles, cohérents et bien présentés. Mon objectif n’est pas seulement de faire fonctionner une application,
+                mais de produire une base de code compréhensible, maintenable et crédible en contexte professionnel.
+              </p>
+            </div>
+
+            <div class="about-panel">
+              <h3>Ce que je souhaite montrer</h3>
+              <p>
+                À travers ce portfolio, je mets en avant des projets Android structurés, une attention portée à l’architecture,
+                ainsi qu’une capacité à documenter correctement mon travail avec des README clairs, des captures cohérentes et une présentation soignée.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="container">
+          <div class="contact-card reveal">
+            <div>
+              <h2>Travaillons ensemble</h2>
+              <p>TODO</p>
+            </div>
+            <div class="contact-links">
+              <a class="btn" href="mailto:tonemail@email.com">Email</a>
+              <a class="btn-outline" href="#">GitHub</a>
+              <a class="btn-outline" href="#">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        © 2026 — Portfolio développeur Android
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach((el, index) => {
+      el.style.transitionDelay = `${Math.min(index * 70, 280)}ms`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
